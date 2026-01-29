@@ -30,9 +30,6 @@ gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 7568D9BB55FF9E5287D586017
 gpg --armor --export 7568D9BB55FF9E5287D586017AE645C0CF8E292A > key.tmp; sudo rpm --import key.tmp; rm -f key.tmp
 
 sudo yum -y --allowerasing install pritunl-openvpn
-sudo yum -y install pritunl mongodb-org
-sudo systemctl enable mongod pritunl
-sudo systemctl start mongod pritunl
 firewall-cmd --permanent --zone=public --add-port=80/tcp
 firewall-cmd --permanent --zone=public --add-port=443/tcp
 firewall-cmd --permanent --zone=public --add-port=4444/tcp
