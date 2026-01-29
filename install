@@ -23,9 +23,13 @@ gpgcheck=1
 enabled=1
 gpgkey=https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc
 ##
+sudo dnf install epel-release -y
+
 gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 7568D9BB55FF9E5287D586017AE645C0CF8E292A
 gpg --armor --export 7568D9BB55FF9E5287D586017AE645C0CF8E292A > key.tmp; sudo rpm --import key.tmp; rm -f key.tmp
 
+sudo dnf install pritunl -y
+sudo systemctl enable pritunl --now
 sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo yum -y update
 sudo yum -y --allowerasing install pritunl-openvpn
@@ -35,3 +39,9 @@ sudo systemctl start mongod pritunl
 firewall-cmd --permanent --zone=public --add-port=80/tcp
 firewall-cmd --permanent --zone=public --add-port=443/tcp
 firewall-cmd --permanent --zone=public --add-port=4444/tcp
+
+sudo sh -c 'echo "* hard nofile 64000" >> /etc/security/limits.conf'
+sudo sh -c 'echo "* soft nofile 64000" >> /etc/security/limits.conf'
+sudo sh -c 'echo "root hard nofile 64000" >> /etc/security/limits.conf'
+sudo sh -c 'echo "root soft nofile 64000" >> /etc/security/limits.conf'
+
