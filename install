@@ -22,13 +22,14 @@ enabled=1
 gpgkey=https://raw.githubusercontent.com/pritunl/pgp/master/pritunl_repo_pub.asc
 ##
 sudo dnf install epel-release -y
-sudo dnf install pritunl mongodb-org -y
+sudo dnf install mongodb-org -y
 sudo systemctl enable --now mongod
-sudo systemctl enable pritunl --now
 
 gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 7568D9BB55FF9E5287D586017AE645C0CF8E292A
 gpg --armor --export 7568D9BB55FF9E5287D586017AE645C0CF8E292A > key.tmp; sudo rpm --import key.tmp; rm -f key.tmp
 
+sudo dnf install pritunl -y
+sudo systemctl enable pritunl --now
 sudo yum -y --allowerasing install pritunl-openvpn
 firewall-cmd --permanent --zone=public --add-port=80/tcp
 firewall-cmd --permanent --zone=public --add-port=443/tcp
